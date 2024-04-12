@@ -88,9 +88,9 @@ abstract class BoolValueObject
         if(is_null($_value)){
             throw new BadRequestException("The value is null.");
         }
-        
+
 		$value = match (gettype($_value)) {
-			'string' => (bool) $_value,
+			'string' => filter_var($_value, FILTER_VALIDATE_BOOLEAN),
 			'boolean' => $_value,
 			default => throw new BadRequestException("The value is not of the accepted type. ($_value)")
 		};
