@@ -29,15 +29,15 @@ class UserTest extends TestCase{
 
         $this->user = User::createFromArray($arr);
 
-        $this->assertTrue($this->user->id->value() === 4);
-        $this->assertTrue($this->user->fullName->value() === 'Juan Perez');
-        $this->assertTrue($this->user->documentNumber->value() === '58965847');
-        $this->assertTrue($this->user->email->value() === 'correo@dominio.com');
-        $this->assertTrue($this->user->password->value() === 'pAssw0rd');
-        $this->assertTrue($this->user->isMerchant->value() === true);
-        $this->assertTrue($this->user->walletAmount->value() === 0.2);
-        $this->assertTrue($this->user->createdAt->valueFormatISO() === '2024-04-12 14:10:10');
-        $this->assertTrue($this->user->updatedAt->valueFormatISO() === '2024-04-12 14:10:15');
+        $this->assertEquals($this->user->id->value(), 4);
+        $this->assertEquals($this->user->fullName->value(), 'Juan Perez');
+        $this->assertEquals($this->user->documentNumber->value(), '58965847');
+        $this->assertEquals($this->user->email->value(), 'correo@dominio.com');
+        $this->assertEquals($this->user->password->value(), 'pAssw0rd');
+        $this->assertEquals($this->user->isMerchant->value(), true);
+        $this->assertEquals($this->user->walletAmount->value(), 0.2);
+        $this->assertEquals($this->user->createdAt->valueFormatISO(), '2024-04-12 14:10:10');
+        $this->assertEquals($this->user->updatedAt->valueFormatISO(), '2024-04-12 14:10:15');
     }
 
     public function testCreateFromArrayIncomplete(){
