@@ -7,7 +7,7 @@ namespace App;
 /**
  * Obtener el listado de todos los usuarios.
  */
-$api->addRoute('GET', '/api/v1/users', function ($req, $args){
+$api->addRoute($api::METHOD_GET, '/api/v1/users', function ($req, $args){
     return Response::Ok([]);
 });
 
@@ -16,7 +16,7 @@ $api->addRoute('GET', '/api/v1/users', function ($req, $args){
  * 
  *  int {id}: Id del usuario
  */
-$api->addRoute('GET', '/api/v1/users/{id}', function ($req, $args){
+$api->addRoute($api::METHOD_GET, '/api/v1/users/{id}', function ($req, $args){
     return Response::Ok([]);
 });
 
@@ -25,7 +25,7 @@ $api->addRoute('GET', '/api/v1/users/{id}', function ($req, $args){
  * 
  *  int {id}: Id del usuario
  */
-$api->addRoute('GET', '/api/v1/users/{id}/transactions', function ($req, $args){
+$api->addRoute($api::METHOD_GET, '/api/v1/users/{id}/transactions', function ($req, $args){
     return Response::Ok([]);
 });
 
@@ -33,6 +33,6 @@ $api->addRoute('GET', '/api/v1/users/{id}/transactions', function ($req, $args){
  * Crear nuevo usuario.
  */
 
-$api->addRoute('POST', '/api/v1/users', function ($req, $args){
+$api->addRoute($api::METHOD_POST, '/api/v1/users', function ($req, $args){
     return Response::Ok([]);
 });

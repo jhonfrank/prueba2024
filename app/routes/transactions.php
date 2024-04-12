@@ -7,6 +7,6 @@ namespace App;
 /**
  * Crear una nueva transaction.
  */
-$api->addRoute('POST', '/api/v1/transactions', function ($req, $args){
+$api->addRoute($api::METHOD_POST, '/api/v1/transactions', function ($req, $args){
     return Response::Ok([]);
 });
