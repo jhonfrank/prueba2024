@@ -24,6 +24,7 @@ abstract class IntValueObject
 	public function __construct(int $_value)
 	{
 		$this->ensureValueIsDefined($_value);
+		$this->ensureValueIsValid($_value);
 
         $this->setValue($_value);
 	}
