@@ -4,24 +4,24 @@ declare(strict_types=1);
 
 namespace Src\Shared\Domain\ValueObject;
 
+use DateTime;
 use Src\Shared\Domain\Exception\BadRequestException;
 
-/**
- * Clase para los VO que sean bool.
- */
-abstract class BoolValueObject
-{	
+abstract class DateTimeValueObject
+{
+	const DATE_TIME_FORMAT = "Y-m-d H:i:s";
+
     /**
-     * @var bool
+     * @var DateTime
      */
-    private bool $value;
+    private DateTime $value;
 
 	/**
      * Constructor de la clase, se verifica que sea un valor definido y un valor valido.
      * 
-	 * @param bool $_value
+	 * @param DateTime $_value
 	 */
-	public function __construct(bool $_value)
+    public function __construct(DateTime $_value)
 	{
 		$this->ensureValueIsDefined($_value);
 
@@ -31,23 +31,23 @@ abstract class BoolValueObject
 	/**
      * Verifica que el valor sea definido, en caso contrario lanza una excepción.
      * 
-	 * @param bool $value
+	 * @param DateTime $value
 	 * 
 	 * @return void
 	 */
-	protected function ensureValueIsDefined(bool $value): void
+	protected function ensureValueIsDefined(DateTime $value): void
 	{
 		if (is_null($value)) {
 			throw new BadRequestException("The value is not defined.");
 		}
 	}
-    
+
     /**
      * Getter del value.
      * 
-     * @return bool
+     * @return DateTime
      */
-	final public function value(): bool
+	final public function value(): DateTime
 	{
 		return $this->value;
 	}
@@ -55,13 +55,23 @@ abstract class BoolValueObject
     /**
      * Setter del value.
      * 
-     * @param bool $_value
+     * @param DateTime $_value
      * 
      * @return void
      */
-	final protected function setValue(bool $_value): void
+	final protected function setValue(DateTime $_value): void
 	{
 		$this->value = $_value;
+	}
+
+	/**
+     * Convierte el value en un string de formato estandar.
+     * 
+	 * @return string
+	 */
+	public function valueFormatISO(): string
+	{
+		return $this->value()->format(self::DATE_TIME_FORMAT);
 	}
 
     /**
@@ -73,6 +83,7 @@ abstract class BoolValueObject
      */
 	final public function equals(self $other): bool
 	{
-		return $this->value() === $other->value();
+		return $this->valueFormatISO() === $other->valueFormatISO();
 	}
+
 }
