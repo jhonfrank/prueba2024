@@ -99,10 +99,10 @@ abstract class IntValueObject
         if(is_null($_value)){
             throw new BadRequestException("The value is null.");
         }
-        
-		$value = match (gettype($_value)) {
-			'string' => (int) $_value,
-			'integer' => $_value,
+
+		$value = match (true) {
+			gettype($_value) == 'string' && is_numeric($_value) => (int) $_value,
+			gettype($_value) == 'integer' => $_value,
 			default => throw new BadRequestException("The value is not of the accepted type. ($_value)")
 		};
 

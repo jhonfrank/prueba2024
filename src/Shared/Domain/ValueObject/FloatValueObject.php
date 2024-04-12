@@ -98,10 +98,10 @@ abstract class FloatValueObject
         if(is_null($_value)){
             throw new BadRequestException("The value is null.");
         }
-        
-		$value = match (gettype($_value)) {
-			'string' => (float) $_value,
-			'double' => $_value,
+
+		$value = match (true) {
+			gettype($_value) == 'string' && is_numeric($_value) => (float) $_value,
+			gettype($_value) == 'double' => $_value,
 			default => throw new BadRequestException("The value is not of the accepted type. ($_value)")
 		};
 

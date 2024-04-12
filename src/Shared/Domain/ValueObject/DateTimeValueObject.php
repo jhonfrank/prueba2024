@@ -98,9 +98,9 @@ abstract class DateTimeValueObject
         if(is_null($_value)){
             throw new BadRequestException("The value is null.");
         }
-		
+
 		$value = match (true) {
-			gettype($_value) === 'string' => DateTime::createFromFormat(self::DATE_TIME_FORMAT, $_value),
+			gettype($_value) === 'string' && DateTime::createFromFormat(self::DATE_TIME_FORMAT, $_value) => DateTime::createFromFormat(self::DATE_TIME_FORMAT, $_value),
 			gettype($_value) === "object" && $_value instanceof DateTime => $_value,
 			default => throw new BadRequestException("The value is not of the accepted type. ($_value)")
 		};
