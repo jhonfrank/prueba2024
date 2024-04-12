@@ -85,4 +85,27 @@ abstract class IntValueObject
 	{
 		return $this->value() === $other->value();
 	}
+
+	
+	/**
+	 * Convierte el argumento en el tipo primitivo aceptado por la clase.
+     * 
+	 * @param mixed $_value
+	 * 
+	 * @return int
+	 */
+	public static function convertArgumentToPrimitiveType(mixed $_value): int
+	{
+        if(is_null($_value)){
+            throw new BadRequestException("The value is null.");
+        }
+        
+		$value = match (gettype($_value)) {
+			'string' => (int) $_value,
+			'integer' => $_value,
+			default => throw new BadRequestException("The value is not of the accepted type. ($_value)")
+		};
+
+		return $value;
+	}
 }

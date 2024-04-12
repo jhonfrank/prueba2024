@@ -41,7 +41,7 @@ abstract class BoolValueObject
 			throw new BadRequestException("The value is not defined.");
 		}
 	}
-    
+
     /**
      * Getter del value.
      * 
@@ -74,5 +74,27 @@ abstract class BoolValueObject
 	final public function equals(self $other): bool
 	{
 		return $this->value() === $other->value();
+	}
+
+    /**
+	 * Convierte el argumento en el tipo primitivo aceptado por la clase.
+     * 
+     * @param mixed $_value
+     * 
+     * @return bool
+     */
+    public static function convertArgumentToPrimitiveType(mixed $_value): bool
+	{
+        if(is_null($_value)){
+            throw new BadRequestException("The value is null.");
+        }
+        
+		$value = match (gettype($_value)) {
+			'string' => (bool) $_value,
+			'boolean' => $_value,
+			default => throw new BadRequestException("The value is not of the accepted type. ($_value)")
+		};
+
+		return $value;
 	}
 }

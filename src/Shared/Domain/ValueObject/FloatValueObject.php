@@ -85,4 +85,26 @@ abstract class FloatValueObject
 	{
 		return $this->value() === $other->value();
 	}
+
+	/**
+	 * Convierte el argumento en el tipo primitivo aceptado por la clase.
+	 * 
+	 * @param mixed $_value
+	 * 
+	 * @return float
+	 */
+	public static function convertArgumentToPrimitiveType(mixed $_value): float
+	{
+        if(is_null($_value)){
+            throw new BadRequestException("The value is null.");
+        }
+        
+		$value = match (gettype($_value)) {
+			'string' => (float) $_value,
+			'double' => $_value,
+			default => throw new BadRequestException("The value is not of the accepted type. ($_value)")
+		};
+
+		return $value;
+	}
 }

@@ -86,4 +86,26 @@ abstract class DateTimeValueObject
 		return $this->valueFormatISO() === $other->valueFormatISO();
 	}
 
+	/**
+	 * Convierte el argumento en el tipo primitivo aceptado por la clase.
+	 * 
+	 * @param mixed $_value
+	 * 
+	 * @return DateTime
+	 */
+	public static function convertArgumentToPrimitiveType(mixed $_value): DateTime
+	{
+        if(is_null($_value)){
+            throw new BadRequestException("The value is null.");
+        }
+		
+		$value = match (true) {
+			gettype($_value) === 'string' => DateTime::createFromFormat(self::DATE_TIME_FORMAT, $_value),
+			gettype($_value) === "object" && $_value instanceof DateTime => $_value,
+			default => throw new BadRequestException("The value is not of the accepted type. ($_value)")
+		};
+
+		return $value;
+	}
+
 }
