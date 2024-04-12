@@ -151,8 +151,8 @@ final class Api{
 
         $body = json_decode(file_get_contents('php://input'), true);
 
-        if ($body === null) {
-            Response::BadRequest('Los valores enviados en el request no es JSON válido son validos.')->write();
+        if ($body === null && $method == self::METHOD_POST) {
+            Response::BadRequest('The values sent in the request are not valid JSON.')->write();
             return;
          }
 
