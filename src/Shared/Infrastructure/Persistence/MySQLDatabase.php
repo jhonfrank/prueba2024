@@ -88,7 +88,7 @@ class MySQLDatabase
     /**
      * Iniciar una transacción.
      */
-    public function begin_transaction()
+    public function begin_transaction(): void
     {
         $this->pdo->setAttribute(PDO::ATTR_AUTOCOMMIT, 0);
         $this->pdo->beginTransaction();
@@ -97,7 +97,7 @@ class MySQLDatabase
     /**
      * Ejecutar commit.
      */
-    public function commit()
+    public function commit(): void
     {
         $this->pdo->commit();
         $this->pdo->setAttribute(PDO::ATTR_AUTOCOMMIT, 1);
@@ -106,9 +106,17 @@ class MySQLDatabase
     /**
      * Ejecutar rollback.
      */
-    public function rollback()
+    public function rollback(): void
     {
         $this->pdo->rollBack();
         $this->pdo->setAttribute(PDO::ATTR_AUTOCOMMIT, 1);
+    }
+
+    /**
+     * Obtener el último id insertado.
+     */
+    public function lastInsertId(): int
+    {
+        return (int) $this->pdo->lastInsertId();
     }
 }
