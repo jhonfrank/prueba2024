@@ -67,7 +67,7 @@ class MySQLUserRepository extends MySQLDatabase implements IUserRepository
     {
         $sql = '
             SELECT
-                u.id id,
+                u.id,
                 u.fullName,
                 u.documentNumber,
                 u.email,
