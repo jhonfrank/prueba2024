@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App;
 
 use Exception;
+use Src\Shared\Domain\Exception\BadRequestException;
+use Src\Shared\Domain\Exception\NotFoundException;
 use Throwable;
 
 /**
@@ -163,6 +165,12 @@ final class Api{
 
         try{
             $this->execRoute($method, $uri, $req)->write();
+        }
+        catch(BadRequestException $e){
+            Response::BadRequest($e->getMessage())->write();
+        }
+        catch(NotFoundException $e){
+            Response::NotFound($e->getMessage())->write();
         }
         catch (Throwable $e) {
             Response::InternalError($e->getMessage())->write();

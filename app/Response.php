@@ -33,9 +33,9 @@ final class Response
      * 
      * @return self
      */
-    public static function Ok(array $data): self
+    public static function Ok(array $data, string $message = ''): self
     {
-        return new self(self::CODE_OK, $data, '');
+        return new self(self::CODE_OK, $data, $message);
     }
 
     /**
@@ -76,8 +76,7 @@ final class Response
 
     /**
      * Escribe la respuesta a la petición en formato JSON.
-     * Para HTTP Code 200: Se escribe el valor que hay en $data.
-     * Para HTTP Code 400, 404 y 500: Se escribe el valor que hay en $message.
+     * Si data está vacío solo se escribe el message.
      * 
      * @return void
      */
@@ -87,10 +86,11 @@ final class Response
         http_response_code($this->code);
 
         $response = [];
-        if ($this->code == self::CODE_OK) {
-            $response = $this->data;
-        } else {
+        if(count($this->data) == 0){
             $response = ['message' => $this->message];
+        }
+        else{
+            $response = $this->data;
         }
 
         echo json_encode(
