@@ -101,6 +101,7 @@ abstract class FloatValueObject
 
 		$value = match (true) {
 			gettype($_value) == 'string' && is_numeric($_value) => (float) $_value,
+			gettype($_value) == 'integer' => (float) $_value,
 			gettype($_value) == 'double' => $_value,
 			default => throw new BadRequestException("The value is not of the accepted type. ($_value)")
 		};
