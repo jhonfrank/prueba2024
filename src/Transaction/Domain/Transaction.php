@@ -143,7 +143,12 @@ final class Transaction
 		$arrayMapperPropertiesClass = self::getArrayMapperPropertiesClass();
 
 		foreach (array_keys($arrayMapperPropertiesClass) as $prop) {
-			$arr[$prop] = $this->$prop->value();
+            if(gettype($this->$prop->value()) === "object" && $this->$prop->value() instanceof \DateTime){
+                $arr[$prop] = $this->$prop->valueFormatISO();
+            }
+            else{
+                $arr[$prop] = $this->$prop->value();
+            }
 		}
 
 		return $arr;
