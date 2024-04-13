@@ -98,7 +98,6 @@ final class TransactionService
         }
         
         # 6. Enviar notificación, actualizar el estado si se llega a enviar.
-        echo $transaction->id->value();
         if($this->notification->send($transaction)){
             $transaction->isNotified = new TransactionIsNotified(true);
             $this->repository->update($transaction);
