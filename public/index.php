@@ -14,10 +14,24 @@ $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
 $dotenv->load();
 
 use App\Api;
+use App\Response;
 
 $api = Api::getInstance();
 
-require __DIR__ . '/../app/routes/users.php';
-require __DIR__ . '/../app/routes/transactions.php';
+try{
+    require __DIR__ . '/../app/routes/users.php';
+    require __DIR__ . '/../app/routes/transactions.php';
+}
+catch(Throwable $e){
+    Response::InternalError($e->getMessage())->write();
+    return;
+}
+
+/**
+ * Ver el estado del servidor API.
+ */
+$api->addRoute($api::METHOD_GET, '/', function ($req, $args){
+    return Response::Ok([], 'Running...');
+});
 
 $api->run();
