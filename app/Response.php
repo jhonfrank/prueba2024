@@ -86,7 +86,7 @@ final class Response
         http_response_code($this->code);
 
         $response = [];
-        if(count($this->data) == 0){
+        if(count($this->data) == 0 && $this->message !== ''){
             $response = ['message' => $this->message];
         }
         else{
