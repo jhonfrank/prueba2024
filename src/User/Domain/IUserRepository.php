@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Src\User\Domain;
 
+use Src\User\Domain\ValueObject\UserDocumentNumber;
+use Src\User\Domain\ValueObject\UserEmail;
 use Src\User\Domain\ValueObject\UserId;
 
 interface IUserRepository
@@ -11,7 +13,7 @@ interface IUserRepository
 	/**
      * Guardar usuario.
      * 
-	 * @param User $transaction
+	 * @param User $user
 	 * 
 	 * @return void
 	 */
@@ -20,7 +22,7 @@ interface IUserRepository
 	/**
      * Actualizar usuario.
      * 
-	 * @param User $transaction
+	 * @param User $user
 	 * 
 	 * @return void
 	 */
@@ -28,8 +30,6 @@ interface IUserRepository
 
 	/**
      * Obtener todos los usuarios.
-     * 
-	 * @param User $transaction
 	 * 
 	 * @return array
 	 */
@@ -38,9 +38,29 @@ interface IUserRepository
 	/**
      * Obtener un usuario por id.
      * 
-	 * @param UserId $transactionId
+	 * @param UserId $userId
 	 * 
 	 * @return User
 	 */
-	public function searchById(UserId $productId): User;
+	public function searchById(UserId $userId): User;
+
+	/**
+     * Obtener usuarios por numero de documento.
+     * 
+	 * @param UserDocumentNumber $userDocumentNumber
+	 * @param UserEmail $userEmail
+	 * 
+	 * @return array
+	 */
+	public function searchByDocumentNumber(UserDocumentNumber $userDocumentNumber): array;
+
+	/**
+     * Obtener usuarios por email.
+     * 
+	 * @param UserDocumentNumber $userDocumentNumber
+	 * @param UserEmail $userEmail
+	 * 
+	 * @return array
+	 */
+	public function searchByEmail(UserEmail $userEmail): array;
 }

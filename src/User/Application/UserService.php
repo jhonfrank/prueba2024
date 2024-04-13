@@ -6,7 +6,10 @@ namespace Src\User\Application;
 
 use Src\User\Domain\User;
 use Src\User\Domain\ValueObject\UserId;
+use Src\User\Domain\ValueObject\UserDocumentNumber;
+use Src\User\Domain\ValueObject\UserEmail;
 use Src\User\Domain\IUserRepository;
+use Src\Shared\Domain\Exception\BadRequestException;
 
 /**
  * Clase del service para User.
@@ -37,6 +40,19 @@ final class UserService
     public function create(array $userArray): void
     {
         $user = User::createFromArray($userArray);
+
+        $usersByDocumentNumber = $this->getByDocumentNumber($user->documentNumber->value());
+
+        if(!empty($usersByDocumentNumber)){
+            throw new BadRequestException('The document number is already registered. (' . $user->documentNumber->value() . ')');
+        }
+
+        $usersByEmail = $this->getByEmail($user->email->value());
+
+        if(!empty($usersByEmail)){
+            throw new BadRequestException('The email is already registered. (' . $user->email->value() . ')');
+        }
+
         $this->repository->save($user);
     }
 
@@ -75,11 +91,37 @@ final class UserService
      * 
      * @param int $id
      * 
-     * @return array|null
+     * @return array
      */
-    public function getById(int $id): ?array
+    public function getById(int $id): array
     {
-        $UserId = new UserId($id);
-        return $this->repository->searchById($UserId)->toArray();
+        $userId = new UserId($id);
+        return $this->repository->searchById($userId)->toArray();
+    }
+
+    /**
+     * Obtener usuarios por número de documento.
+     * 
+     * @param string $documentNumber
+     * 
+     * @return array
+     */
+    public function getByDocumentNumber(string $documentNumber): array
+    {
+        $userDocumentNumber = new UserDocumentNumber($documentNumber);
+        return $this->repository->searchByDocumentNumber($userDocumentNumber);
+    }
+
+    /**
+     * Obtener usuarios por email.
+     * 
+     * @param string $email
+     * 
+     * @return array
+     */
+    public function getByEmail(string $email): array
+    {
+        $userEmail = new UserEmail($email);
+        return $this->repository->searchByEmail($userEmail);
     }
 }

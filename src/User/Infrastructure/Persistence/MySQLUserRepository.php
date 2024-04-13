@@ -9,6 +9,8 @@ use Src\Shared\Domain\Exception\NotFoundException;
 use Src\User\Domain\IUserRepository;
 use Src\User\Domain\User;
 use Src\User\Domain\ValueObject\UserId;
+use Src\User\Domain\ValueObject\UserDocumentNumber;
+use Src\User\Domain\ValueObject\UserEmail;
 use PDO;
 
 class MySQLUserRepository extends MySQLDatabase implements IUserRepository
@@ -118,4 +120,61 @@ class MySQLUserRepository extends MySQLDatabase implements IUserRepository
 
         return $user;
     }
+
+	public function searchByDocumentNumber(UserDocumentNumber $userDocumentNumber): array
+    {        
+        $sql = '
+            SELECT
+                u.id,
+                u.fullName,
+                u.documentNumber,
+                u.email,
+                u.password,
+                u.isMerchant,
+                u.walletAmount,
+                u.createdAt,
+                u.updatedAt
+            FROM user u
+            WHERE u.documentNumber = :documentNumber;
+        ';
+
+        $params = [
+            ':documentNumber' => [$userDocumentNumber->value(), PDO::PARAM_STR]
+        ];
+
+        $rows = $this->select($sql, $params);
+
+        $users = array_map(fn($item): array => User::createFromArray($item)->toArray(), $rows);
+
+        return $users;
+    }
+
+	public function searchByEmail(UserEmail $userEmail): array
+    {        
+        $sql = '
+            SELECT
+                u.id,
+                u.fullName,
+                u.documentNumber,
+                u.email,
+                u.password,
+                u.isMerchant,
+                u.walletAmount,
+                u.createdAt,
+                u.updatedAt
+            FROM user u
+            WHERE u.email = :email;
+        ';
+
+        $params = [
+            ':email' => [$userEmail->value(), PDO::PARAM_STR]
+        ];
+
+        $rows = $this->select($sql, $params);
+
+        $users = array_map(fn($item): array => User::createFromArray($item)->toArray(), $rows);
+
+        return $users;
+    }
+
 }
