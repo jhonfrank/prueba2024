@@ -187,7 +187,7 @@ final class User
 		$arrayMapperPropertiesClass = self::getArrayMapperPropertiesClass();
 
 		foreach (array_keys($arrayMapperPropertiesClass) as $prop) {
-			$arr[$prop] = $this->$prop()->value();
+			$arr[$prop] = $this->$prop->value();
 		}
 
 		return $arr;
