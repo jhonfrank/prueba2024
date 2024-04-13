@@ -1,0 +1,253 @@
+{
+	"info": {
+		"_postman_id": "2ad5c025-d349-4238-b79b-4848226f71f5",
+		"name": "USER",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26978610"
+	},
+	"item": [
+		{
+			"name": "Crear usuario 1",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fullName\": \"Carlos García\",\r\n    \"documentNumber\": \"23658975\",\r\n    \"email\": \"carlos@dominio.com\",\r\n    \"password\": \"password\",\r\n    \"isMerchant\": false,\r\n    \"walletAmount\": 80\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:1410/api/v1/users",
+					"host": [
+						"localhost"
+					],
+					"port": "1410",
+					"path": [
+						"api",
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear usuario 2",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fullName\": \"Juan Perez\",\r\n    \"documentNumber\": \"25478689\",\r\n    \"email\": \"juan@dominio.com\",\r\n    \"password\": \"password\",\r\n    \"isMerchant\": false,\r\n    \"walletAmount\": 100\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:1410/api/v1/users",
+					"host": [
+						"localhost"
+					],
+					"port": "1410",
+					"path": [
+						"api",
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear usuario 3 comerciante",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fullName\": \"Jose Solano\",\r\n    \"documentNumber\": \"94587462\",\r\n    \"email\": \"jose@domain.com\",\r\n    \"password\": \"password\",\r\n    \"isMerchant\": true,\r\n    \"walletAmount\": 50\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:1410/api/v1/users",
+					"host": [
+						"localhost"
+					],
+					"port": "1410",
+					"path": [
+						"api",
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear usuario 4 con email repetido",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fullName\": \"Jose Villar\",\r\n    \"documentNumber\": \"36512847\",\r\n    \"email\": \"jose@domain.com\",\r\n    \"password\": \"password\",\r\n    \"isMerchant\": false,\r\n    \"walletAmount\": 60\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:1410/api/v1/users",
+					"host": [
+						"localhost"
+					],
+					"port": "1410",
+					"path": [
+						"api",
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ver usuario 1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:1410/api/v1/users/1",
+					"host": [
+						"localhost"
+					],
+					"port": "1410",
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ver todos los usuarios",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:1410/api/v1/users",
+					"host": [
+						"localhost"
+					],
+					"port": "1410",
+					"path": [
+						"api",
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ver transacciones del usuario 1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:1410/api/v1/users/1/transactions",
+					"host": [
+						"localhost"
+					],
+					"port": "1410",
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"1",
+						"transactions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ver transacciones del usuario 2",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:1410/api/v1/users/2/transactions",
+					"host": [
+						"localhost"
+					],
+					"port": "1410",
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"2",
+						"transactions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ver transacciones del usuario 3",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:1410/api/v1/users/3/transactions",
+					"host": [
+						"localhost"
+					],
+					"port": "1410",
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"3",
+						"transactions"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

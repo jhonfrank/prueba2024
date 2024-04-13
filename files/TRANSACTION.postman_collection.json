@@ -1,0 +1,187 @@
+{
+	"info": {
+		"_postman_id": "c46dd06e-bbb3-47d0-812d-ab08bd6a628f",
+		"name": "TRANSACTION",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26978610"
+	},
+	"item": [
+		{
+			"name": "Crear transacción usuario 1 y 2",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"amount\": 2,\r\n    \"payerUserId\": 1,\r\n    \"payeeUserId\": 2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:1410/api/v1/transactions",
+					"host": [
+						"localhost"
+					],
+					"port": "1410",
+					"path": [
+						"api",
+						"v1",
+						"transactions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear transacción usuario 1 y 3",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"amount\": 3,\r\n    \"payerUserId\": 1,\r\n    \"payeeUserId\": 3\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:1410/api/v1/transactions",
+					"host": [
+						"localhost"
+					],
+					"port": "1410",
+					"path": [
+						"api",
+						"v1",
+						"transactions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear transacción usuario 2 y 3",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"amount\": 1.5,\r\n    \"payerUserId\": 2,\r\n    \"payeeUserId\": 3\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:1410/api/v1/transactions",
+					"host": [
+						"localhost"
+					],
+					"port": "1410",
+					"path": [
+						"api",
+						"v1",
+						"transactions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear transacción usuario 3 y 2",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"amount\": 2.4,\r\n    \"payerUserId\": 3,\r\n    \"payeeUserId\": 2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:1410/api/v1/transactions",
+					"host": [
+						"localhost"
+					],
+					"port": "1410",
+					"path": [
+						"api",
+						"v1",
+						"transactions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ver todas las transacciones",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:1410/api/v1/transactions",
+					"host": [
+						"localhost"
+					],
+					"port": "1410",
+					"path": [
+						"api",
+						"v1",
+						"transactions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ver transacción 1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:1410/api/v1/transactions/1",
+					"host": [
+						"localhost"
+					],
+					"port": "1410",
+					"path": [
+						"api",
+						"v1",
+						"transactions",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
