@@ -84,6 +84,9 @@ final class Response
     {
         header('Content-Type: application/json');
         http_response_code($this->code);
+        
+        header("Access-Control-Allow-Origin: *");
+        header("Access-Control-Allow-Headers: *");
 
         $response = [];
         if(count($this->data) == 0 && $this->message !== ''){
