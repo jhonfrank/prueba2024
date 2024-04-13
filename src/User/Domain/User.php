@@ -113,9 +113,10 @@ final class User
      * 
      * @return void
      */
-    public function sendPayment(UserWalletAmount $amount): void{
+    public function sendPayment(UserWalletAmount $amount): void
+    {
         if($this->isMerchant->value()){
-            throw new BadRequestException("Merchant users can't send payments." . $this->isMerchant->value());
+            throw new BadRequestException("Merchant users can't send payments.");
         }
         
         if($amount->value() > $this->walletAmount->value()){
@@ -133,9 +134,38 @@ final class User
      * 
      * @return void
      */
-    public function receivePayment(UserWalletAmount $amount): void{
+    public function receivePayment(UserWalletAmount $amount): void
+    {
         $walletAmount = $this->walletAmount->value() + $amount->value();
         $this->walletAmount = new UserWalletAmount($walletAmount);
+    }
+
+    /**
+     * Validar el balance del usuario respecto a la cantidad del argumento.
+     * 
+     * @param UserWalletAmount $amount
+     * 
+     * @return void
+     */
+    public function validateBalance(UserWalletAmount $amount): void
+    {
+        if($amount->value() > $this->walletAmount->value()){
+            throw new BadRequestException("The user does not have enough balance.");
+        }
+    }
+
+    
+    /**
+     * Generar hash del password.
+     * 
+     * @param UserWalletAmount $amount
+     * 
+     * @return void
+     */
+    public function generateHashPassword(): void
+    {
+        $hash = password_hash($this->password->value(), PASSWORD_DEFAULT); 
+        $this->password = new UserPassword($hash);
     }
 
     /**

@@ -41,6 +41,8 @@ final class UserService
     {
         $user = User::createFromArray($userArray);
 
+        $user->generateHashPassword();
+
         $usersByDocumentNumber = $this->getByDocumentNumber($user->documentNumber->value());
 
         if(!empty($usersByDocumentNumber)){
