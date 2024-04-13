@@ -7,6 +7,7 @@ namespace Src\Transaction\Domain;
 use Src\Transaction\Domain\ValueObject\TransactionId;
 use Src\Transaction\Domain\ValueObject\TransactionPayerUserId;
 use Src\Transaction\Domain\ValueObject\TransactionPayeeUserId;
+use Src\User\Domain\User;
 
 /**
  * Interfaz para el repositorio de Transacción.
@@ -21,6 +22,15 @@ interface ITransactionRepository
 	 * @return void
 	 */
 	public function save(Transaction $transaction): void;
+
+	/**
+     * Actualizar transacción.
+     * 
+	 * @param Transaction $transaction
+	 * 
+	 * @return void
+	 */
+	public function update(Transaction $transaction): void;
 
 	/**
      * Obtener todas las transacciones.
@@ -55,4 +65,27 @@ interface ITransactionRepository
 	 * @return array
 	 */
 	public function searchByPayeeUserId(TransactionPayeeUserId $transactionPayeeUserId): array;
+
+	/**
+     * Actualizar usuario.
+     * 
+	 * @param User $user
+	 * 
+	 * @return void
+	 */
+    public function updateUser(User $user): void;
+
+	/**
+     * Obtener un usuario por id.
+     * 
+	 * @param TransactionPayerUserId|TransactionPayeeUserId $userId
+	 * 
+	 * @return User
+	 */
+	public function searchUserById(TransactionPayerUserId|TransactionPayeeUserId $userId): User;
+    
+    public function begin_transaction(): void;
+    public function commit(): void;
+    public function rollback(): void;
+    public function lastInsertId(): int;
 }
