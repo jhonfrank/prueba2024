@@ -91,6 +91,7 @@ abstract class BoolValueObject
 
 		$value = match (gettype($_value)) {
 			'string' => filter_var($_value, FILTER_VALIDATE_BOOLEAN),
+			'integer' => (bool) $_value,
 			'boolean' => $_value,
 			default => throw new BadRequestException("The value is not of the accepted type. ($_value)")
 		};
