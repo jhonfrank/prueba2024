@@ -4,11 +4,17 @@ declare(strict_types=1);
 
 namespace Src\Transaction\Application;
 
+use Src\Shared\Domain\Exception\BadRequestException;
 use Src\Transaction\Domain\Transaction;
 use Src\Transaction\Domain\ValueObject\TransactionId;
 use Src\Transaction\Domain\ITransactionRepository;
+use Src\Transaction\Domain\ITransactionAuth;
+use Src\Transaction\Domain\ITransactionNotification;
+use Src\Transaction\Domain\ValueObject\TransactionIsNotified;
 use Src\Transaction\Domain\ValueObject\TransactionPayerUserId;
 use Src\Transaction\Domain\ValueObject\TransactionPayeeUserId;
+use Src\User\Domain\ValueObject\UserWalletAmount;
+use Throwable;
 
 /**
  * Clase del service para Transaction.
@@ -21,12 +27,24 @@ final class TransactionService
     private ITransactionRepository $repository;
 
     /**
+     * @var ITransactionAuth
+     */
+    private ITransactionAuth $auth;
+
+    /**
+     * @var ITransactionNotification
+     */
+    private ITransactionNotification $notification;
+
+    /**
      * Constructor de la clase.
      * 
      * @param ITransactionRepository $_repository
      */
-    public function __construct(ITransactionRepository $_repository) {
+    public function __construct(ITransactionRepository $_repository, ITransactionAuth $_auth, ITransactionNotification $_notification) {
         $this->repository = $_repository;
+        $this->auth = $_auth;
+        $this->notification = $_notification;
     }
 
     /**
@@ -39,7 +57,52 @@ final class TransactionService
     public function create(array $transactionArray): void
     {
         $transaction = Transaction::createFromArray($transactionArray);
-        $this->repository->save($transaction);
+
+        $payerUser = $this->repository->searchUserById($transaction->payerUserId);
+        $payeeUser = $this->repository->searchUserById($transaction->payeeUserId);
+
+        $amount = new UserWalletAmount($transaction->amount->value());
+
+        # 0. Validar el saldo del usuario
+        $payerUser->validateBalance($amount);
+     
+        try{
+
+            # 1. Inicio de la transacción
+            $this->repository->begin_transaction();
+            
+            # 2. Generar el registro de la transacción
+            $this->repository->save($transaction);            
+            $transaction->id = new TransactionId($this->repository->lastInsertId());
+
+            # 3. Actualizar saldo de la billetera del usuario que envía el pago
+            $payerUser->sendPayment($amount);
+            $this->repository->updateUser($payerUser);
+
+            # 4. Actualizar saldo de la billetera del usuario que recibe el pago
+            $payeeUser->receivePayment($amount);
+            $this->repository->updateUser($payeeUser);
+
+            # 5. Consulta de autorizacion externa
+            if(!$this->auth->auth($transaction)){
+                throw new BadRequestException('Unauthorized transaction by external service.');
+            }
+
+            # 6. Confirmar la transacción
+            $this->repository->commit();           
+
+        }
+        catch(Throwable $e){
+            $this->repository->rollback();
+            throw new BadRequestException('The transaction has not been processed. ' . $e->getMessage());
+        }
+        
+        # 6. Enviar notificación, actualizar el estado si se llega a enviar.
+        echo $transaction->id->value();
+        if($this->notification->send($transaction)){
+            $transaction->isNotified = new TransactionIsNotified(true);
+            $this->repository->update($transaction);
+        }
     }
 
     /**
@@ -57,9 +120,9 @@ final class TransactionService
      * 
      * @param int $id
      * 
-     * @return array|null
+     * @return array
      */
-    public function getById(int $id): ?array
+    public function getById(int $id): array
     {
         $transactionId = new TransactionId($id);
         return $this->repository->searchById($transactionId)->toArray();
