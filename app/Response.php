@@ -86,7 +86,7 @@ final class Response
         http_response_code($this->code);
         
         header("Access-Control-Allow-Origin: *");
-        header("Access-Control-Allow-Headers: *");
+        header('Access-Control-Allow-Methods: POST, GET, DELETE, PUT');
 
         $response = [];
         if(count($this->data) == 0 && $this->message !== ''){
